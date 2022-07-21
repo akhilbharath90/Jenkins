@@ -1,0 +1,19 @@
+pipeline {
+agent 
+stages{
+stages("maven build"){
+steps{
+sh"mvn cleanpackage"
+}
+}
+stage ('deply-dev"){
+steps{
+sshagent(['deploy']){
+sh "chmod777/home/demo/.jenkins -R"
+sh "cp -rp /home/demo/.jenkins/workspace/test_project/target/*.jar /home/demo/ooutput"
+sh "scp -rp /home/demo/output/*.jar demo@http://3.145.13.180:/home/demo'
+}
+}
+}
+}
+}
